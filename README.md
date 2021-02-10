@@ -1,9 +1,3 @@
-# Chatting-web
+# Gulp Practice
 
 Make a chat web using socket.io and express.js
-
-# To Do
-
-- [ ] Chat function
-- [ ] Chat room
-- [ ] Design
