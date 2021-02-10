@@ -1,8 +1,10 @@
 import gulp from "gulp";
 import gulpPug from "gulp-pug";
 import del from "del";          // build 파일 청소 모듈
-import gulpWebServer from "gulp-webserver"
-import sass from "gulp-sass"
+import gulpWebServer from "gulp-webserver";
+import sass from "gulp-sass";
+import autoprefixer from "gulp-autoprefixer";       // 낮은 버젼도 호환 가능하게 바꿔주는 모듈
+import miniCss from "gulp-csso";
 
 sass.compiler = require('node-sass')
 
@@ -22,7 +24,11 @@ const pug = () => gulp.src(routes.pug.src).pipe(gulpPug()).pipe(gulp.dest(routes
 
 const clean = () => del(["build"])
 
-const styles = () => gulp.src(routes.scss.src).pipe(sass().on('error', sass.logError)).pipe(gulp.dest(routes.scss.dest))
+const styles = () => gulp.src(routes.scss.src).pipe(sass().on('error', sass.logError)).pipe(autoprefixer({
+    browsers:["last 2 versions"]
+}))
+.pipe(miniCss())
+.pipe(gulp.dest(routes.scss.dest))
 
 const webserver = () => gulp.src("build").pipe(gulpWebServer({port:5000, livereload : true}))
 
